@@ -10,9 +10,8 @@
 struct PinConfig
 {
     const bool isGPIO;
-    // TODO LORIS: string_view
-    const char *GPIO;
-    const char *PinMux[10];
+    const std::string_view GPIO;
+    const std::string_view PinMux[10];
 };
 
 // clang-format off
