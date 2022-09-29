@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string_view>
 
 class GPIO
@@ -10,13 +11,10 @@ class GPIO
 
     std::string_view m_label{};
     std::string_view m_gpio{};
+    GPIO(std::string_view label, std::string_view gpio);
 
   public:
-    // TODO LORIS: hide constructor, use static public method instead
-    GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gpio{gpio}
-    {
-    }
-
+    static std::optional<GPIO> create(std::string_view label);
     void readValue();
     void writeValue(std::string_view val);
 };

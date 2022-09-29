@@ -3,6 +3,10 @@
 
 int main()
 {
-    GPIO thisPin("p8_16", "46");
-    thisPin.readValue();
+    auto pin{GPIO::create("p8_16")};
+    if (!pin.has_value())
+    {
+        std::cerr << "Invalid pin provided\n";
+    }
+    pin->readValue();
 }

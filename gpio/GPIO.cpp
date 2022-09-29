@@ -4,6 +4,24 @@
 #include <iostream>
 #include <sstream>
 
+std::optional<GPIO> GPIO::create(std::string_view label)
+{
+    const auto found{PinMappings.find(label)};
+    if (found == PinMappings.cend())
+    {
+        return {};
+    }
+    if (!(*found).second.isGPIO)
+    {
+        return {};
+    }
+    return GPIO(label, (*found).second.GPIO);
+}
+
+GPIO::GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gpio{gpio}
+{
+}
+
 void GPIO::readValue()
 {
     // TODO LORIS:  abstract boilerplate

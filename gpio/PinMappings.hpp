@@ -5,6 +5,7 @@
  */
 
 #include <map>
+#include <string_view>
 
 struct PinConfig
 {
