@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 std::optional<GPIO> GPIO::create(std::string_view label)
 {
@@ -22,33 +23,54 @@ GPIO::GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gp
 {
 }
 
-void GPIO::readValue()
+std::string GPIO::read(std::string_view path)
 {
-    // TODO LORIS:  abstract boilerplate
-    std::ostringstream fullPath{};
-    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
-
-    std::ifstream iFile{fullPath.str()};
+    std::ifstream iFile{path};
     if (iFile.fail())
     {
         throw "hello world";
     }
 
-    char buffer[100];
-    iFile.getline(buffer, 100);
-    std::cout << "Pin " << m_label << " value: " << buffer << '\n';
+    std::string strBuf{};
+    std::getline(iFile, strBuf);
+    return strBuf;
 }
 
-void GPIO::writeValue(std::string_view val)
+void GPIO::write(std::string_view path, std::string_view text)
 {
-    // TODO LORIS:  abstract boilerplate
-    std::ostringstream fullPath{};
-    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
-
-    std::ofstream oFile{fullPath.str()};
+    std::ofstream oFile{path};
     if (oFile.fail())
     {
         throw "hello world";
     }
-    oFile << val;
+    oFile << text;
+}
+
+void GPIO::readValue()
+{
+    std::ostringstream fullPath{};
+    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
+    std::cout << "Pin " << m_label << " value: " << read(fullPath.str()) << '\n';
+}
+
+void GPIO::writeValue(std::string_view val)
+{
+    std::ostringstream fullPath{};
+    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
+    write(fullPath.str(), val);
+}
+
+void GPIO::readDirection()
+{
+    std::ostringstream fullPath{};
+    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/direction";
+    std::cout << "Pin " << m_label << " direction: " << read(fullPath.str()) << '\n';
+}
+
+// TODO LORIS: set ocp too
+void GPIO::writeDirection(std::string_view dir)
+{
+    std::ostringstream fullPath{};
+    fullPath << GPIO::gpioPath << "/gpio" << m_gpio << "/direction";
+    write(fullPath.str(), dir);
 }
