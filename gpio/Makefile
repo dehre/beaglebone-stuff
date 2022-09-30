@@ -3,7 +3,7 @@ CFLAGS = -g -Wall -Wextra -Werror -O0 -DDEBUG
 CFLAGS += -std=c++17
 
 OBJS = GPIO.o main.o
-BIN = main 
+BIN = gpio 
 
 all: $(BIN)
 
@@ -12,7 +12,7 @@ release: CFLAGS = -Wall -Wextra -Werror -O2
 release: CFLAGS += -std=c++17
 release: $(BIN)
 
-main: $(OBJS)
+gpio: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)
 
 %.o: %.cpp
