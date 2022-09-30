@@ -21,13 +21,13 @@ const std::map<std::string_view, PinConfig> PinMappings
         "p8_15",
         {.isGPIO = true,
          .GPIO = "47",
-         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd", "gpio_input", "qep", "pru_ecap", "pruin"}},
+         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}},
     },
     {
         "p8_16",
         {.isGPIO = true,
          .GPIO = "46",
-         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd", "gpio_input", "qep", "pruin"}}
+         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
     }
 };
 // clang-format on
