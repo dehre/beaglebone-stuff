@@ -35,9 +35,9 @@ std::string GPIO::read(std::string_view path)
         throw std::ios::failure{message.str()};
     }
 
-    std::string strBuf{};
-    std::getline(iFile, strBuf);
-    return strBuf;
+    std::string text{};
+    std::getline(iFile, text);
+    return text;
 }
 
 void GPIO::write(std::string_view path, std::string_view text)
@@ -50,6 +50,7 @@ void GPIO::write(std::string_view path, std::string_view text)
         throw std::ios::failure{message.str()};
     }
     oFile << text;
+    std::cout << "Written \"" << text << "\" to \"" << path << "\"\n";
 }
 
 void GPIO::readValue()
