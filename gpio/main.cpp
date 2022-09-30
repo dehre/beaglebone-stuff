@@ -3,10 +3,13 @@
 
 int main()
 {
-    auto pin{GPIO::create("p8_16")};
-    if (!pin.has_value())
+    try
     {
-        std::cerr << "Invalid pin provided\n";
+        auto pin{GPIO::create("p8_16")};
+        pin.readValue();
     }
-    pin->readValue();
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }

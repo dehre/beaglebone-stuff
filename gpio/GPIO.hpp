@@ -1,6 +1,6 @@
 #pragma once
 
-#include <optional>
+#include <string>
 #include <string_view>
 
 class GPIO
@@ -16,7 +16,7 @@ class GPIO
     static void write(std::string_view path, std::string_view text);
 
   public:
-    static std::optional<GPIO> create(std::string_view label);
+    static GPIO create(std::string_view label);
     void readValue();
     void writeValue(std::string_view val);
     void readDirection();
