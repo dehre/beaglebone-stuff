@@ -27,7 +27,7 @@ GPIO::GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gp
 
 std::string GPIO::read(std::string_view path)
 {
-    std::ifstream iFile{path};
+    std::ifstream iFile{path.data()};
     if (iFile.fail())
     {
         std::ostringstream message{};
@@ -42,7 +42,7 @@ std::string GPIO::read(std::string_view path)
 
 void GPIO::write(std::string_view path, std::string_view text)
 {
-    std::ofstream oFile{path};
+    std::ofstream oFile{path.data()};
     if (oFile.fail())
     {
         std::ostringstream message{};
