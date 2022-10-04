@@ -49,6 +49,14 @@ Then, as before:
 ssh -p 22022 debian@localhost
 ```
 
+To avoid entering a password each time you ssh into the VM, create an identity key and copy the public one into the VM:
+
+```sh
+ssh-keygen
+
+ssh-copy-id -p 22022 debian@localhost
+```
+
 All becomes easier when adding aliases to `~/.bashrc`:
 
 ```sh
