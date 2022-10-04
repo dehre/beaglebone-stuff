@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 project(beaglebone-stuff VERSION 1.0)
 
+set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+set(CMAKE_C_STANDARD 17)
+
+set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 # set(CMAKE_CXX_CLANG_TIDY clang-tidy)
