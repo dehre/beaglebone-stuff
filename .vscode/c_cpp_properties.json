@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "default",
+            "includePath": [
+                "/usr/include",
+                "${workspaceFolder}/**"
+            ],
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "compilerPath": "/usr/bin/gcc"
+        }
+    ],
+    "version": 4
+}
