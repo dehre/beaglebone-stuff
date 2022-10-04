@@ -5,8 +5,14 @@ A tiny program to control the GPIO pins on the board.
 ### Build and clean:
 
 ```sh
+# build
+mkdir -p build
+cd build
+cmake ..
 make
-make clean
+
+# clean
+rm -rf build
 ```
 
 ### Synopsis
