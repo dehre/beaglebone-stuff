@@ -29,7 +29,9 @@ brew install --cask utm
 
 The "Debian 10.4 (Xfce)" image will do: https://mac.getutm.app/gallery/debian-10-4-xfce
 
-## ssh
+You can also use the "Debian 10.4 (Minimal)" image, but it won't allow shared directories (for some reasons unknown to me).
+
+## SSH
 
 First, set up your router to give the BBB a static IP address each time it connects, e.g. `192.168.178.10`.
 
