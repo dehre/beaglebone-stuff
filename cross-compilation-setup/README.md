@@ -27,7 +27,7 @@ You can use UTM to add a Debian VM to MacOS:
 brew install --cask utm
 ```
 
-The "Debian 10.4 (Minimal)" image will do: https://mac.getutm.app/gallery/debian-10-4-minimal
+The "Debian 10.4 (Xfce)" image will do: https://mac.getutm.app/gallery/debian-10-4-xfce
 
 ## ssh
 
@@ -63,6 +63,7 @@ All becomes easier when adding aliases to `~/.bashrc`:
 alias ssh-bbb='ssh -X debian@192.168.178.10'
 alias sftp-bbb='sftp debian@192.168.178.10'
 alias ssh-debianvm='ssh -p 22022 debian@localhost'
+alias sftp-debianvm='ssh -P 22022 debian@localhost'
 ```
 
 If you want to open VSCode into these remote directories, add those lines to your `ssh/config`:
@@ -81,6 +82,26 @@ Host beaglebone
     ForwardX11 yes
     User debian
 ```
+
+## Shared Directories
+
+It might be useful to have a shared directory between the host-os and the guest-os.
+
+UTM's documentation is quite scarce on the topic: https://mac.getutm.app/guide/#sharing
+
+This comment fills the missing steps: https://github.com/utmapp/UTM/discussions/3755#discussioncomment-2487252
+
+## Shared Directories - Do you really need them?
+
+Working on a project on the VM using shared directories is quite painful.
+Much easier, instead, to clone the repo directly in the VM and work from there instead.
+
+You may want to create a separate GitHub token for the VM:
+
+* https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls
+* https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+You may need to import your GPG keys into your VM: https://linuxhint.com/export-import-keys-with-gpg
 
 ## Compilation
 
