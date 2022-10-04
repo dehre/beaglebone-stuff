@@ -8,7 +8,8 @@
             ],
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
-            "compilerPath": "/usr/bin/gcc"
+            "compilerPath": "/usr/bin/gcc",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4
