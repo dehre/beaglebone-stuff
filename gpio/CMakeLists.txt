@@ -7,7 +7,6 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-# set(CMAKE_CXX_CLANG_TIDY clang-tidy)
 
 # See: https://github.com/cpp-best-practices/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 add_compile_options(

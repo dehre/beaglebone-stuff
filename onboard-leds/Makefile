@@ -1,4 +1,4 @@
-CC = g++
+CC = arm-linux-gnueabihf-g++
 CFLAGS = -g -Wall -Wextra -Werror -O0 -DDEBUG
 CFLAGS += -std=c++17
 
