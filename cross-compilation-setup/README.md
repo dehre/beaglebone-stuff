@@ -2,6 +2,16 @@
 
 Cross compilation setup using a Debian 10.4 VM on a Mac M1.
 
+Workflow:
+
+* start the VM, point VSCode-Remote to it;
+
+* develop changes, cross-compile the final executable;
+
+* sftp the executable into the BBB;
+
+* run the executable from the BBB.
+
 ## The test program
 
 Here's the test program used throughout this readme:
