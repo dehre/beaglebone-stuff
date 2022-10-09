@@ -6,17 +6,7 @@
 // ./gpio p8_16 write direction in+
 // ./gpio p8_16 read value
 
-static void printUsageAndThrow()
-{
-    std::cerr << "Invalid arguments provided.\n";
-    std::cerr << "    Usage: ./gpio <pin> <command> <target> [input]\n";
-    std::cerr << "    <pin>: (pin formatted as \"p8_16\")\n";
-    std::cerr << "    <command>: \"read\" or \"write\"\n";
-    std::cerr << "    <target>: \"value\" or \"direction\"\n";
-    std::cerr << "    <input>: (used only with write commands)\n";
-
-    throw std::invalid_argument{"Invalid arguments provided"};
-}
+static void printUsage();
 
 int main(int argc, const char *argv[])
 {
@@ -24,7 +14,7 @@ int main(int argc, const char *argv[])
     {
         if (argc < 4 || argc > 5)
         {
-            printUsageAndThrow();
+            throw std::invalid_argument{"Invalid number of arguments"};
         }
 
         auto pin{GPIO::create(argv[1])};
@@ -43,14 +33,14 @@ int main(int argc, const char *argv[])
             }
             else
             {
-                printUsageAndThrow();
+                throw std::invalid_argument{"Invalid <target> for \"read\" <command>"};
             }
         }
         else if (command == "write")
         {
             if (argc != 5)
             {
-                printUsageAndThrow();
+                throw std::invalid_argument{"Missing <input> for \"write\" <command>"};
             }
             std::string_view input{argv[4]};
             if (target == "value")
@@ -63,18 +53,30 @@ int main(int argc, const char *argv[])
             }
             else
             {
-                printUsageAndThrow();
+                throw std::invalid_argument{"Invalid <target> for \"write\" <command>"};
             }
         }
         else
         {
-            printUsageAndThrow();
+            throw std::invalid_argument{"Invalid <command>"};
         }
     }
     catch (const std::exception &e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << "Error: " << e.what() << '\n';
+        printUsage();
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
+}
+
+static void printUsage()
+{
+    std::cerr << "Usage: ./gpio <pin> <command> <target> [input]\n";
+    std::cerr << "    <pin>: pin formatted as \"p8_16\"\n";
+    std::cerr << "    <command>: \"read\" or \"write\"\n";
+    std::cerr << "    <target>: \"value\" or \"direction\"\n";
+    std::cerr << "    [input] when <command>==\"write\" && <target>==\"value\": \"0\" or \"1\"\n";
+    std::cerr << "    [input] when <command>==\"write\" && <target>==\"direction\":"
+                 "\"in\" or \"in+\" or \"in-\" or \"out\"\n";
 }
