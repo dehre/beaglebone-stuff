@@ -64,7 +64,7 @@ void GPIO::writeValue(std::string_view val)
 {
     if (val != "0" && val != "1")
     {
-        throw std::invalid_argument{"Invalid value provided"};
+        throw std::invalid_argument{"Invalid <input> for \"value\" <target>"};
     }
     std::ostringstream pathToValue{};
     pathToValue << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
@@ -102,7 +102,7 @@ void GPIO::writeDirection(std::string_view dir)
     }
     else
     {
-        throw std::invalid_argument{"Invalid direction provided"};
+        throw std::invalid_argument{"Invalid <input> for \"direction\" <target>"};
     }
 }
 
