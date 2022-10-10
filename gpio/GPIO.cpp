@@ -5,15 +5,9 @@
 #include <sstream>
 #include <stdexcept>
 
-// TODO LORIS: private method?
-static std::string strToUpper(std::string_view str);
-
-GPIO::GPIO(std::string_view label, std::string_view gpioNumber) : m_label{label}, m_gpioNumber{gpioNumber}
-{
-    m_pathToGpioValue = buildPathFromTemplate(GPIO::templatePathToGpioValue, m_gpioNumber);
-    m_pathToGpioDirection = buildPathFromTemplate(GPIO::templatePathToGpioDirection, m_gpioNumber);
-    m_pathToPinMux = buildPathFromTemplate(GPIO::templatePathToPinMux, strToUpper(m_label));
-}
+/*
+ * PUBLIC
+ */
 
 GPIO::GPIO(std::string_view label)
 {
@@ -27,42 +21,6 @@ GPIO::GPIO(std::string_view label)
         throw std::invalid_argument{"The pin provided cannot be used as GPIO"};
     }
     GPIO(label, (*found).second.gpioNumber);
-}
-
-std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)
-{
-    std::string path{templ};
-    size_t startPos{path.find("{}")};
-    path.replace(startPos, 2, str);
-    return path;
-}
-
-std::string GPIO::read(std::string_view path)
-{
-    std::ifstream iFile{path.data()};
-    if (iFile.fail())
-    {
-        std::ostringstream message{};
-        message << "Could not open file for reading: " << path;
-        throw std::ios::failure{message.str()};
-    }
-
-    std::string text{};
-    std::getline(iFile, text);
-    return text;
-}
-
-void GPIO::write(std::string_view path, std::string_view text)
-{
-    std::ofstream oFile{path.data()};
-    if (oFile.fail())
-    {
-        std::ostringstream message{};
-        message << "Could not open file for writing: " << path;
-        throw std::ios::failure{message.str()};
-    }
-    oFile << text;
-    std::cout << "Written \"" << text << "\" to \"" << path << "\"\n";
 }
 
 void GPIO::readValue()
@@ -107,7 +65,18 @@ void GPIO::writeDirection(std::string_view dir)
     }
 }
 
-static std::string strToUpper(std::string_view str)
+/*
+ * PRIVATE
+ */
+
+GPIO::GPIO(std::string_view label, std::string_view gpioNumber) : m_label{label}, m_gpioNumber{gpioNumber}
+{
+    m_pathToGpioValue = buildPathFromTemplate(GPIO::templatePathToGpioValue, m_gpioNumber);
+    m_pathToGpioDirection = buildPathFromTemplate(GPIO::templatePathToGpioDirection, m_gpioNumber);
+    m_pathToPinMux = buildPathFromTemplate(GPIO::templatePathToPinMux, strToUpper(m_label));
+}
+
+std::string GPIO::strToUpper(std::string_view str)
 {
     std::string result{str};
     for (auto &c : result)
@@ -115,4 +84,40 @@ static std::string strToUpper(std::string_view str)
         c = static_cast<char>(toupper(c));
     }
     return result;
+}
+
+std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)
+{
+    std::string path{templ};
+    size_t startPos{path.find("{}")};
+    path.replace(startPos, 2, str);
+    return path;
+}
+
+std::string GPIO::read(std::string_view path)
+{
+    std::ifstream iFile{path.data()};
+    if (iFile.fail())
+    {
+        std::ostringstream message{};
+        message << "Could not open file for reading: " << path;
+        throw std::ios::failure{message.str()};
+    }
+
+    std::string text{};
+    std::getline(iFile, text);
+    return text;
+}
+
+void GPIO::write(std::string_view path, std::string_view text)
+{
+    std::ofstream oFile{path.data()};
+    if (oFile.fail())
+    {
+        std::ostringstream message{};
+        message << "Could not open file for writing: " << path;
+        throw std::ios::failure{message.str()};
+    }
+    oFile << text;
+    std::cout << "Written \"" << text << "\" to \"" << path << "\"\n";
 }
