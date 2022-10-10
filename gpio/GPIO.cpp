@@ -26,7 +26,7 @@ GPIO::GPIO(std::string_view label)
     {
         throw std::invalid_argument{"The pin provided cannot be used as GPIO"};
     }
-    GPIO(label, (*found).second.GPIONumber);
+    GPIO(label, (*found).second.gpioNumber);
 }
 
 std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)

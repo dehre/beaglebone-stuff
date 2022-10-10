@@ -10,8 +10,8 @@
 struct PinConfig
 {
     const bool isGPIO;
-    const std::string_view GPIONumber;
-    const std::string_view PinMux[10];
+    const std::string_view gpioNumber;
+    const std::string_view pinMux[10];
 };
 
 // clang-format off
@@ -20,14 +20,14 @@ const std::map<std::string_view, PinConfig> PinMappings
     {
         "p8_16",
         {.isGPIO = true,
-         .GPIONumber = "46",
-         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
+         .gpioNumber = "46",
+         .pinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
     },
     {
         "p9_12",
         {.isGPIO = true,
-         .GPIONumber = "60",
-         .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
+         .gpioNumber = "60",
+         .pinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
     }
 };
 // clang-format on
