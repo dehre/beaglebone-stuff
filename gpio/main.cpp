@@ -3,16 +3,13 @@
 #include <iostream>
 #include <string_view>
 
-// ./gpio p8_16 write direction in+
-// ./gpio p8_16 read value
-
 static void printUsage();
 
 int main(int argc, const char *argv[])
 {
     try
     {
-        if (argc < 4 || argc > 5)
+        if (argc < 4)
         {
             throw std::invalid_argument{"Invalid number of arguments"};
         }
@@ -20,56 +17,45 @@ int main(int argc, const char *argv[])
         auto pin{GPIO(argv[1])};
         std::string_view command{argv[2]};
         std::string_view target{argv[3]};
+        std::string_view input{};
+        (command == "write" && argc != 5) ? throw std::invalid_argument{"Missing <input> for \"write\""}
+                                          : input = argv[4];
 
-        if (command == "read")
+        if (command == "read" && target == "value")
         {
-            if (target == "value")
-            {
-                pin.readValue();
-            }
-            else if (target == "direction")
-            {
-                pin.readDirection();
-            }
-            else
-            {
-                throw std::invalid_argument{"Invalid <target> for \"read\" <command>"};
-            }
+            pin.readValue();
         }
-        else if (command == "write")
+        else if (command == "read" && target == "direction")
         {
-            if (argc != 5)
-            {
-                throw std::invalid_argument{"Missing <input> for \"write\" <command>"};
-            }
-            std::string_view input{argv[4]};
-            if (target == "value")
-            {
-                pin.writeValue(input);
-            }
-            else if (target == "direction")
-            {
-                pin.writeDirection(input);
-            }
-            else
-            {
-                throw std::invalid_argument{"Invalid <target> for \"write\" <command>"};
-            }
+            pin.readDirection();
+        }
+        else if (command == "write" && target == "value")
+        {
+            pin.writeValue(input);
+        }
+        else if (command == "write" && target == "direction")
+        {
+            pin.writeDirection(input);
         }
         else
         {
-            throw std::invalid_argument{"Invalid <command>"};
+            throw std::invalid_argument{"Invalid arguments provided"};
         }
     }
     catch (const std::exception &e)
     {
-        std::cerr << "Error: " << e.what() << '\n';
+        std::cerr << "Error: " << e.what() << "\n\n";
         printUsage();
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }
 
+/*
+ * Examples:
+ * ./gpio p8_16 read value
+ * ./gpio p8_16 write direction in+
+ */
 static void printUsage()
 {
     std::cerr << "Usage: ./gpio <pin> <command> <target> [input]\n";
