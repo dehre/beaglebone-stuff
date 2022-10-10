@@ -27,7 +27,7 @@ class I2C
         }
     }
 
-    ~I2C()
+    virtual ~I2C()
     {
         close(m_fd);
     }
