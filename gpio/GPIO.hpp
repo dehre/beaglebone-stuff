@@ -13,8 +13,6 @@ class GPIO
     void writeDirection(std::string_view dir);
 
   private:
-    GPIO(std::string_view label, std::string_view gpioNumber);
-
     static std::string strToUpper(std::string_view str);
     static std::string buildPathFromTemplate(const std::string_view &templ, std::string_view str);
     static std::string read(std::string_view path);
