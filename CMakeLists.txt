@@ -47,3 +47,11 @@ add_compile_definitions($<$<NOT:$<CONFIG:RELEASE>>:DEBUG>)
 add_executable(gpio gpio/main.cpp gpio/GPIO.cpp)
 # target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
 # target_link_libraries(main PRIVATE somelib)
+
+############################################################
+## TARGET: I2C
+############################################################
+
+add_executable(i2c i2c/main.cpp)
+# target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
+# target_link_libraries(main PRIVATE somelib)
