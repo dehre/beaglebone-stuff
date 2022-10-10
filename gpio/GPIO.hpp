@@ -7,12 +7,11 @@ class GPIO
 {
   private:
     std::string_view m_label{};
-    std::string_view m_gpio{};
+    std::string_view m_gpioNumber{};
     std::string m_gpioValuePath{};
     std::string m_gpioDirectionPath{};
     std::string m_pinMuxPath{};
-    // TODO LORIS: name param gpioNumber
-    GPIO(std::string_view label, std::string_view gpio);
+    GPIO(std::string_view label, std::string_view gpioNumber);
 
     static constexpr std::string_view gpioValueTemplatePath{"/sys/class/gpio/gpio{}/value"};
     static constexpr std::string_view gpioDirectionTemplatePath{"/sys/class/gpio/gpio{}/direction"};
@@ -23,8 +22,7 @@ class GPIO
     static void write(std::string_view path, std::string_view text);
 
   public:
-    // TODO LORIS: make it a public constructor instead
-    static GPIO create(std::string_view label);
+    GPIO(std::string_view label);
     void readValue();
     void writeValue(std::string_view val);
     void readDirection();

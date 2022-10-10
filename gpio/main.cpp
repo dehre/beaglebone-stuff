@@ -17,7 +17,7 @@ int main(int argc, const char *argv[])
             throw std::invalid_argument{"Invalid number of arguments"};
         }
 
-        auto pin{GPIO::create(argv[1])};
+        auto pin{GPIO(argv[1])};
         std::string_view command{argv[2]};
         std::string_view target{argv[3]};
 

@@ -8,7 +8,14 @@
 // TODO LORIS: private method?
 static std::string strToUpper(std::string_view str);
 
-GPIO GPIO::create(std::string_view label)
+GPIO::GPIO(std::string_view label, std::string_view gpioNumber) : m_label{label}, m_gpioNumber{gpioNumber}
+{
+    m_gpioValuePath = buildPathFromTemplate(GPIO::gpioValueTemplatePath, m_gpioNumber);
+    m_gpioDirectionPath = buildPathFromTemplate(GPIO::gpioDirectionTemplatePath, m_gpioNumber);
+    m_pinMuxPath = buildPathFromTemplate(GPIO::pinMuxTemplatePath, strToUpper(m_label));
+}
+
+GPIO::GPIO(std::string_view label)
 {
     const auto found{PinMappings.find(label)};
     if (found == PinMappings.cend())
@@ -19,14 +26,7 @@ GPIO GPIO::create(std::string_view label)
     {
         throw std::invalid_argument{"The pin provided cannot be used as GPIO"};
     }
-    return GPIO(label, (*found).second.GPIO);
-}
-
-GPIO::GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gpio{gpio}
-{
-    m_gpioValuePath = buildPathFromTemplate(GPIO::gpioValueTemplatePath, m_gpio);
-    m_gpioDirectionPath = buildPathFromTemplate(GPIO::gpioDirectionTemplatePath, m_gpio);
-    m_pinMuxPath = buildPathFromTemplate(GPIO::pinMuxTemplatePath, strToUpper(m_label));
+    GPIO(label, (*found).second.GPIONumber);
 }
 
 std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)

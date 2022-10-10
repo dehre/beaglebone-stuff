@@ -10,8 +10,7 @@
 struct PinConfig
 {
     const bool isGPIO;
-    // TODO LORIS: rename GPIONumber
-    const std::string_view GPIO;
+    const std::string_view GPIONumber;
     const std::string_view PinMux[10];
 };
 
@@ -21,13 +20,13 @@ const std::map<std::string_view, PinConfig> PinMappings
     {
         "p8_16",
         {.isGPIO = true,
-         .GPIO = "46",
+         .GPIONumber = "46",
          .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
     },
     {
         "p9_12",
         {.isGPIO = true,
-         .GPIO = "60",
+         .GPIONumber = "60",
          .PinMux = {"default", "gpio", "gpio_pu", "gpio_pd"}}
     }
 };
