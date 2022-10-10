@@ -8,14 +8,14 @@ class GPIO
   private:
     std::string_view m_label{};
     std::string_view m_gpioNumber{};
-    std::string m_gpioValuePath{};
-    std::string m_gpioDirectionPath{};
-    std::string m_pinMuxPath{};
+    std::string m_pathToGpioValue{};
+    std::string m_pathToGpioDirection{};
+    std::string m_pathToPinMux{};
     GPIO(std::string_view label, std::string_view gpioNumber);
 
-    static constexpr std::string_view gpioValueTemplatePath{"/sys/class/gpio/gpio{}/value"};
-    static constexpr std::string_view gpioDirectionTemplatePath{"/sys/class/gpio/gpio{}/direction"};
-    static constexpr std::string_view pinMuxTemplatePath{"/sys/devices/platform/ocp/ocp:{}_pinmux/state"};
+    static constexpr std::string_view templatePathToGpioValue{"/sys/class/gpio/gpio{}/value"};
+    static constexpr std::string_view templatePathToGpioDirection{"/sys/class/gpio/gpio{}/direction"};
+    static constexpr std::string_view templatePathToPinMux{"/sys/devices/platform/ocp/ocp:{}_pinmux/state"};
     static std::string buildPathFromTemplate(const std::string_view &templ, std::string_view str);
 
     static std::string read(std::string_view path);

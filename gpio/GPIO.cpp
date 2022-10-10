@@ -10,9 +10,9 @@ static std::string strToUpper(std::string_view str);
 
 GPIO::GPIO(std::string_view label, std::string_view gpioNumber) : m_label{label}, m_gpioNumber{gpioNumber}
 {
-    m_gpioValuePath = buildPathFromTemplate(GPIO::gpioValueTemplatePath, m_gpioNumber);
-    m_gpioDirectionPath = buildPathFromTemplate(GPIO::gpioDirectionTemplatePath, m_gpioNumber);
-    m_pinMuxPath = buildPathFromTemplate(GPIO::pinMuxTemplatePath, strToUpper(m_label));
+    m_pathToGpioValue = buildPathFromTemplate(GPIO::templatePathToGpioValue, m_gpioNumber);
+    m_pathToGpioDirection = buildPathFromTemplate(GPIO::templatePathToGpioDirection, m_gpioNumber);
+    m_pathToPinMux = buildPathFromTemplate(GPIO::templatePathToPinMux, strToUpper(m_label));
 }
 
 GPIO::GPIO(std::string_view label)
@@ -67,7 +67,7 @@ void GPIO::write(std::string_view path, std::string_view text)
 
 void GPIO::readValue()
 {
-    std::cout << "Pin " << m_label << " value: " << read(m_gpioValuePath) << '\n';
+    std::cout << "Pin " << m_label << " value: " << read(m_pathToGpioValue) << '\n';
 }
 
 void GPIO::writeValue(std::string_view val)
@@ -76,30 +76,30 @@ void GPIO::writeValue(std::string_view val)
     {
         throw std::invalid_argument{"Invalid <input> for \"value\" <target>"};
     }
-    write(m_gpioValuePath, val);
+    write(m_pathToGpioValue, val);
 }
 
 void GPIO::readDirection()
 {
-    std::cout << "Pin " << m_label << " direction: " << read(m_gpioDirectionPath) << '\n';
+    std::cout << "Pin " << m_label << " direction: " << read(m_pathToGpioDirection) << '\n';
 }
 
 void GPIO::writeDirection(std::string_view dir)
 {
     if (dir == "default")
     {
-        write(m_pinMuxPath, "default");
-        write(m_gpioDirectionPath, "in");
+        write(m_pathToPinMux, "default");
+        write(m_pathToGpioDirection, "in");
     }
     else if (dir == "in" || dir == "out")
     {
-        write(m_pinMuxPath, "default");
-        write(m_gpioDirectionPath, dir);
+        write(m_pathToPinMux, "default");
+        write(m_pathToGpioDirection, dir);
     }
     else if (dir == "in+" || dir == "in-")
     {
-        dir == "in+" ? write(m_pinMuxPath, "gpio_pu") : write(m_pinMuxPath, "gpio_pd");
-        write(m_gpioDirectionPath, "in");
+        dir == "in+" ? write(m_pathToPinMux, "gpio_pu") : write(m_pathToPinMux, "gpio_pd");
+        write(m_pathToGpioDirection, "in");
     }
     else
     {
