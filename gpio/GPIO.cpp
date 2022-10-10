@@ -5,6 +5,7 @@
 #include <sstream>
 #include <stdexcept>
 
+// TODO LORIS: private method?
 static std::string strToUpper(std::string_view str);
 
 GPIO GPIO::create(std::string_view label)
@@ -23,6 +24,17 @@ GPIO GPIO::create(std::string_view label)
 
 GPIO::GPIO(std::string_view label, std::string_view gpio) : m_label{label}, m_gpio{gpio}
 {
+    m_gpioValuePath = buildPathFromTemplate(GPIO::gpioValueTemplatePath, m_gpio);
+    m_gpioDirectionPath = buildPathFromTemplate(GPIO::gpioDirectionTemplatePath, m_gpio);
+    m_pinMuxPath = buildPathFromTemplate(GPIO::pinMuxTemplatePath, strToUpper(m_label));
+}
+
+std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)
+{
+    std::string path{templ};
+    size_t startPos{path.find("{}")};
+    path.replace(startPos, 2, str);
+    return path;
 }
 
 std::string GPIO::read(std::string_view path)
@@ -55,9 +67,7 @@ void GPIO::write(std::string_view path, std::string_view text)
 
 void GPIO::readValue()
 {
-    std::ostringstream pathToValue{};
-    pathToValue << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
-    std::cout << "Pin " << m_label << " value: " << read(pathToValue.str()) << '\n';
+    std::cout << "Pin " << m_label << " value: " << read(m_gpioValuePath) << '\n';
 }
 
 void GPIO::writeValue(std::string_view val)
@@ -66,39 +76,30 @@ void GPIO::writeValue(std::string_view val)
     {
         throw std::invalid_argument{"Invalid <input> for \"value\" <target>"};
     }
-    std::ostringstream pathToValue{};
-    pathToValue << GPIO::gpioPath << "/gpio" << m_gpio << "/value";
-    write(pathToValue.str(), val);
+    write(m_gpioValuePath, val);
 }
 
 void GPIO::readDirection()
 {
-    std::ostringstream pathToDirection{};
-    pathToDirection << GPIO::gpioPath << "/gpio" << m_gpio << "/direction";
-    std::cout << "Pin " << m_label << " direction: " << read(pathToDirection.str()) << '\n';
+    std::cout << "Pin " << m_label << " direction: " << read(m_gpioDirectionPath) << '\n';
 }
 
 void GPIO::writeDirection(std::string_view dir)
 {
-    std::ostringstream pathToDirection{};
-    pathToDirection << GPIO::gpioPath << "/gpio" << m_gpio << "/direction";
-    std::ostringstream pathToPinMux{};
-    pathToPinMux << GPIO::ocpPath << "/ocp:" << strToUpper(m_label) << "_pinmux/state";
-
     if (dir == "default")
     {
-        write(pathToPinMux.str(), "default");
-        write(pathToDirection.str(), "in");
+        write(m_pinMuxPath, "default");
+        write(m_gpioDirectionPath, "in");
     }
     else if (dir == "in" || dir == "out")
     {
-        write(pathToPinMux.str(), "default");
-        write(pathToDirection.str(), dir);
+        write(m_pinMuxPath, "default");
+        write(m_gpioDirectionPath, dir);
     }
     else if (dir == "in+" || dir == "in-")
     {
-        dir == "in+" ? write(pathToPinMux.str(), "gpio_pu") : write(pathToPinMux.str(), "gpio_pd");
-        write(pathToDirection.str(), "in");
+        dir == "in+" ? write(m_pinMuxPath, "gpio_pu") : write(m_pinMuxPath, "gpio_pd");
+        write(m_gpioDirectionPath, "in");
     }
     else
     {

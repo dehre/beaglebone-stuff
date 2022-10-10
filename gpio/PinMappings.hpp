@@ -10,6 +10,7 @@
 struct PinConfig
 {
     const bool isGPIO;
+    // TODO LORIS: rename GPIONumber
     const std::string_view GPIO;
     const std::string_view PinMux[10];
 };
