@@ -40,6 +40,10 @@ add_compile_options(
 # add_link_options(-pthread)
 add_compile_definitions($<$<NOT:$<CONFIG:RELEASE>>:DEBUG>)
 
-add_executable(gpio main.cpp GPIO.cpp)
+############################################################
+## TARGET: GPIO
+############################################################
+
+add_executable(gpio gpio/main.cpp gpio/GPIO.cpp)
 # target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
 # target_link_libraries(main PRIVATE somelib)
