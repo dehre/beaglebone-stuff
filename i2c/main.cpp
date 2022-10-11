@@ -1,10 +1,6 @@
 #include "SHT21.hpp"
 #include <iostream>
 
-// TODO LORIS: no need to split header and implementation files
-
-// TODO LORIS: readme, and re-upload circuit
-
 constexpr int g_i2cInstance{2};
 
 int main()

@@ -2,6 +2,8 @@
 
 Using a pre-build LKM (Linux Kernel Module) to read temperature and humidity from the SHT21 sensor (I2C).
 
+The same functionality could be achieved by programmatically accessing the i2c device (see [`i2c` directory](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/I2C.hpp)).
+
 ## Circuit
 
 <img src="./circuit.svg" width=70% height=70%>
@@ -75,4 +77,4 @@ Check this post for a more detailed description: https://forum.beagleboard.org/t
 
 ## Aside - The LKM implementation
 
-For reference, I copied the current LKM implementation into [`sht21.c`](https://github.com/dehre/stm32f3-tiny-rtos/blob/main/readme_assets/saleae-logic2-session.sal).
+For reference, I copied the current LKM implementation into [`sht21.c`](https://github.com/dehre/beaglebone-stuff/blob/main/using-lkm/sht21.c).
