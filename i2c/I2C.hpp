@@ -18,12 +18,12 @@ class I2C
         m_pathToDev.replace(m_pathToDev.find("{}"), 2, std::to_string(instance));
         if ((m_fd = open(m_pathToDev.data(), O_RDWR)) < 0)
         {
-            throw std::invalid_argument("Invalid i2c instance provided\n");
+            throw std::invalid_argument("Invalid i2c instance provided");
         };
 
         if (ioctl(m_fd, I2C_SLAVE, m_slaveAddress) < 0)
         {
-            throw std::invalid_argument("Invalid slave address provided\n");
+            throw std::invalid_argument("Invalid slave address provided");
         }
     }
 

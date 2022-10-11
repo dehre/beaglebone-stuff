@@ -1,6 +1,9 @@
 #include "SHT21.hpp"
-#include <cstdint>
 #include <iostream>
+
+// TODO LORIS: no need to split header and implementation files
+
+// TODO LORIS: readme, and re-upload circuit
 
 constexpr int g_i2cInstance{2};
 
@@ -10,11 +13,11 @@ int main()
     {
         SHT21 sensor(g_i2cInstance);
         auto temperature{sensor.readTemperature()};
-        std::cout << "Everything went well! Got data: " << temperature << '\n';
+        auto humidity{sensor.readHumidity()};
+        std::cout << "Temperature: " << temperature << "°C - Humidity: " << humidity << "% \n";
     }
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
-        // TODO LORIS: print usage
     }
 }
