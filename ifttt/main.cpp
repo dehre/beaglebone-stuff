@@ -1,30 +1,47 @@
+#include "SHT21.hpp"
 #include <cstdlib> // for EXIT_SUCCESS and EXIT_FAILURE
 #include <httplib.h>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+
+constexpr int g_i2cInstance{2};
 
 int main()
 {
-    const char *iftttKey{std::getenv("IFTTT_KEY")};
-    if (!iftttKey)
+    try
     {
-        std::cerr << "Env variable $IFTTT_KEY not provided\n";
-        return EXIT_FAILURE;
-    }
+        SHT21 sensor(g_i2cInstance);
+        auto temperature{sensor.readTemperature()};
+        std::cout << "Temperature: " << temperature << "°C\n";
+        if (temperature < 30.0)
+        {
+            return EXIT_SUCCESS;
+        }
 
-    std::string iftttPath{"/trigger/high_temperature/json/with/key/"};
-    iftttPath.append(iftttKey);
+        const char *iftttKey{std::getenv("IFTTT_KEY")};
+        if (!iftttKey)
+        {
+            throw std::runtime_error("Env variable $IFTTT_KEY not provided");
+        }
+        std::string iftttPath{"/trigger/high_temperature/json/with/key/"};
+        iftttPath.append(iftttKey);
 
-    httplib::Client cli("http://maker.ifttt.com");
-    if (const auto res = cli.Post(iftttPath))
-    {
+        httplib::Client cli("http://maker.ifttt.com");
+        const auto res = cli.Post(iftttPath);
+        if (!res)
+        {
+            std::string err{"HTTP Error: " + httplib::to_string(res.error())};
+            throw std::runtime_error(err);
+        }
+
         std::cout << "Response status: " << res.value().status << '\n';
         std::cout << "Response body: " << res.value().body << '\n';
     }
-    else
+    catch (const std::exception &e)
     {
-        const auto err = res.error();
-        std::cerr << "HTTP error: " << httplib::to_string(err) << '\n';
+        std::cerr << e.what() << '\n';
+        return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }
