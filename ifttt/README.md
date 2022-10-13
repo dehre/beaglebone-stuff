@@ -32,7 +32,7 @@ sftp-bbb
 > put ./build/ifttt
 
 # on the BBB, set the IFTTT_KEY env variable and run the program
-export IFTTT_KEY=theKeyIReceivedWhenISetUpMyWebHook
+export IFTTT_KEY=theKeyYouReceivedWhenYouSetUpTheWebHook
 ./ifttt
 ```
 

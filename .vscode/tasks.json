@@ -1,6 +1,9 @@
 {
     "version": "2.0.0",
     "tasks": [
+        /*
+         * cmake clean
+         */
         {
             "type": "shell",
             "label": "cmake clean",
@@ -11,6 +14,9 @@
             },
             "problemMatcher": []
         },
+        /*
+         * cmake rebuild
+         */
         {
             "type": "shell",
             "label": "cmake rebuild",
