@@ -21,8 +21,16 @@ The project uses a global CMake file with different targets.
 Dependencies are managed with Conan.
 
 ```sh
-TODO LORIS
+mkdir build
+cd build
+
+conan install ..
+
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build
+cmake --build .
 ```
+
+The executables will be placed in `build/bin`.
 
 ## The projects
 

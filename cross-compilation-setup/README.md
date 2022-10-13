@@ -130,8 +130,16 @@ Finally, compile and run your program:
 g++ testprogram.cpp -o testprogram
 ```
 
-PS. If you want to install a recent enough version of `CMake`, the best option is to build it from source.
+To install a recent enough version of `CMake`, the best option is to build it from source.
 See: https://github.com/Kitware/CMake
+
+To install `Conan`, the [recommended way](https://docs.conan.io/en/1.50/installation.html) is through `pip`:
+
+```sh
+sudo apt install python3-pip
+pip3 install conan
+echo 'PATH=$PATH:~/.local/bin' >> ~/.bashrc
+```
 
 ## Cross-compilation
 
@@ -149,7 +157,7 @@ Then compile using the new toolchain, and put it in the BeagleBoard:
 ```sh
 arm-linux-gnueabihf-g++ testprogram.cpp -o testcross
 
-sftp debian@192.168.178.10
+sftp-bbb
 sftp> put testcross
 ```
 
@@ -212,7 +220,7 @@ On the VM, compile the program with debug symbols, then put it on the BBB:
 ```sh
 arm-linux-gnueabihf-g++ -g testprogram.cpp -o testcross
 
-sftp debian@192.168.178.10
+sftp-bbb
 sftp> put testcross
 ```
 

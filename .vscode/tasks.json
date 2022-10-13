@@ -10,6 +10,44 @@
                 "cwd": "${workspaceFolder}"
             },
             "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "cmake rebuild",
+            "command": "cmake --build .",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": ["_cmake_setup"],
+        },
+        {
+            "type": "shell",
+            "label": "_cmake_setup",
+            "command": "cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Build",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": ["_conan_install"],
+        },
+        {
+            "type": "shell",
+            "label": "_conan_install",
+            "command": "conan install ..",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": ["_mkdir_build"],
+        },
+        {
+            "type": "shell",
+            "label": "_mkdir_build",
+            "command": "mkdir -p build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
         }
     ]
 }

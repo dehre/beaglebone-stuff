@@ -37,21 +37,31 @@ add_compile_options(
 #   -Werror                   # treat warnings as errors
   )
 
-# add_link_options(-pthread)
 add_compile_definitions($<$<NOT:$<CONFIG:RELEASE>>:DEBUG>)
+
+# Conan
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(TARGETS)
+
+# Setup VSCode's auto-completion with Conan, see: https://stackoverflow.com/a/70616885/7168774
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ############################################################
 ## TARGET: GPIO
 ############################################################
 
 add_executable(gpio gpio/main.cpp gpio/GPIO.cpp)
-# target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
-# target_link_libraries(main PRIVATE somelib)
 
 ############################################################
 ## TARGET: I2C
 ############################################################
 
 add_executable(i2c i2c/main.cpp)
-# target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
-# target_link_libraries(main PRIVATE somelib)
+
+############################################################
+## TARGET: IFTTT
+############################################################
+
+add_executable(ifttt ifttt/main.cpp)
+target_include_directories(ifttt PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(ifttt CONAN_PKG::cpp-httplib)

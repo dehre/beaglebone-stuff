@@ -19,7 +19,7 @@ Build:
 mkdir build
 cd build
 
-conan install .. --build=missing
+conan install ..
 
 cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build
 cmake --build .
