@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <cstdlib> // for EXIT_SUCCESS and EXIT_FAILURE
 #include <httplib.h>
 #include <iostream>

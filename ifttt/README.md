@@ -38,6 +38,23 @@ export IFTTT_KEY=theKeyYouReceivedWhenYouSetUpTheWebHook
 
 The program will (of course) fail if you didn't set up a WebHook on IFTTT.com or didn't export the `IFTTT_KEY` env variable.
 
+## Setting up the Linux Cron Daemon
+
+In the BBB, edit `/etc/crontab` so that it runs the executable every minute, and redirect stdout and stderr to a file:
+
+```sh
+sudo su
+vi /etc/crontab
+```
+
+Add this line:
+
+```
+* * * * * root IFTTT_KEY=yourKey /home/debian/ifttt >> /home/debian/ifttt-logs.txt 2>&1
+```
+
+Here's a nice online tool that helps with cron schedule expressions.
+
 ## Interacting with the SHT21 Temperature Sensor + Circuit
 
 Check the [`i2c`](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/README.md) directory for details on setting it up.
@@ -47,10 +64,6 @@ Check the [`i2c`](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/README
 The library [`cpp-httplib`](https://github.com/yhirose/cpp-httplib) has greatly sped up the task of making HTTP requests.  
 It's been installed through Conan (check `conanfile.txt` and `CMakeLists.txt` for details).
 
-## Setting up the Linux Cron Daemon
-
-TODO LORIS
-
-## What's possible with IFTTT?
+## What else is possible with IFTTT?
 
 A ton of stuff, check https://ifttt.com/explore

@@ -44,4 +44,4 @@ Here are the projects, in the order they've been developed:
 
 * `i2c`:
 
-* `ifttt`:
+* `ifttt`: ... and Linux's cron daemon
