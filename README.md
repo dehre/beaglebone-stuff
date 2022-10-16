@@ -24,13 +24,25 @@ Dependencies are managed with Conan.
 mkdir build
 cd build
 
-conan install ..
+conan install .. --build=missing --profile=../profile_crossbuild
 
 cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build
 cmake --build .
 ```
 
 The executables will be placed in `build/bin`.
+
+If, for debugging purposes, you want to build the project for the local VM:
+
+```sh
+mkdir build
+cd build
+
+conan install .. --build=missing
+
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build -DBUILD_LOCAL=1
+cmake --build .
+```
 
 ## The projects
 

@@ -1,9 +1,6 @@
 {
     "version": "2.0.0",
     "tasks": [
-        /*
-         * cmake clean
-         */
         {
             "type": "shell",
             "label": "cmake clean",
@@ -14,42 +11,67 @@
             },
             "problemMatcher": []
         },
-        /*
-         * cmake rebuild
-         */
+        /* Build project for the beaglebone */
         {
             "type": "shell",
-            "label": "cmake rebuild",
+            "label": "cmake rebuild bbb",
             "command": "cmake --build .",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
             "dependsOrder": "sequence",
-            "dependsOn": ["_cmake_setup"],
+            "dependsOn": ["cmake clean", "_mkdir_build_","_conan_install_bbb_", "_cmake_setup_bbb_"],
         },
+        /* Build project for the local machine */
         {
             "type": "shell",
-            "label": "_cmake_setup",
+            "label": "cmake rebuild local",
+            "command": "cmake --build .",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": ["cmake clean", "_mkdir_build_","_conan_install_local_", "_cmake_setup_local_"],
+        },
+
+        /*
+         * "hidden" tasks
+         */
+        {
+            "type": "shell",
+            "label": "_cmake_setup_bbb_",
             "command": "cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Build",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "dependsOrder": "sequence",
-            "dependsOn": ["_conan_install"],
         },
         {
             "type": "shell",
-            "label": "_conan_install",
-            "command": "conan install ..",
+            "label": "_cmake_setup_local_",
+            "command": "cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Build -DBUILD_LOCAL=1",
             "options": {
                 "cwd": "${workspaceFolder}/build"
             },
-            "dependsOrder": "sequence",
-            "dependsOn": ["_mkdir_build"],
         },
         {
             "type": "shell",
-            "label": "_mkdir_build",
+            "label": "_conan_install_bbb_",
+            "command": "conan install .. --build=missing --profile=../profile_crossbuild",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+        },
+        {
+            "type": "shell",
+            "label": "_conan_install_local_",
+            "command": "conan install .. --build=missing",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+        },
+        {
+            "type": "shell",
+            "label": "_mkdir_build_",
             "command": "mkdir -p build",
             "options": {
                 "cwd": "${workspaceFolder}"

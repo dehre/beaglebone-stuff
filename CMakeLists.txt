@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.21)
 project(beaglebone-stuff VERSION 1.0)
 
-set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
-set(CMAKE_C_STANDARD 17)
+if(NOT DEFINED BUILD_LOCAL)
+    set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+    set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+else()
+    set(ignoreme "${BUILD_LOCAL}") # remove warning "unused variable"
+endif()
 
-set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -65,3 +69,11 @@ add_executable(i2c i2c/main.cpp)
 add_executable(ifttt ifttt/main.cpp)
 target_include_directories(ifttt PRIVATE ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(ifttt CONAN_PKG::cpp-httplib)
+
+############################################################
+## TARGET: MQTT
+############################################################
+
+add_executable(mqtt mqtt/main.cpp)
+target_include_directories(mqtt PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(mqtt CONAN_PKG::paho-mqtt-c)

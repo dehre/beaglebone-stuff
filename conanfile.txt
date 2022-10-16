@@ -1,5 +1,10 @@
 [requires]
     cpp-httplib/0.11.2
+    paho-mqtt-c/1.3.11
 
 [generators]
     cmake
+
+[options]
+    paho-mqtt-c:ssl=False
+    paho-mqtt-c:asynchronous=False
