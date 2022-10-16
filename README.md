@@ -57,3 +57,7 @@ Here are the projects, in the order they've been developed:
 * `i2c`:
 
 * `ifttt`: ... and Linux's cron daemon
+
+## TODOs, eventually
+
+* create a .env file, instead of picking env variables from the cli

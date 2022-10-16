@@ -2,9 +2,11 @@ cmake_minimum_required(VERSION 3.21)
 project(beaglebone-stuff VERSION 1.0)
 
 if(NOT DEFINED BUILD_LOCAL)
+    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the BBB)
     set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
     set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 else()
+    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the VM)
     set(ignoreme "${BUILD_LOCAL}") # remove warning "unused variable"
 endif()
 
@@ -67,13 +69,11 @@ add_executable(i2c i2c/main.cpp)
 ############################################################
 
 add_executable(ifttt ifttt/main.cpp)
-target_include_directories(ifttt PRIVATE ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(ifttt CONAN_PKG::cpp-httplib)
 
 ############################################################
 ## TARGET: MQTT
 ############################################################
 
-add_executable(mqtt mqtt/main.cpp)
-target_include_directories(mqtt PRIVATE ${PROJECT_SOURCE_DIR}/include)
+add_executable(mqtt mqtt/main.cpp mqtt/MQTT.cpp)
 target_link_libraries(mqtt CONAN_PKG::paho-mqtt-c)
