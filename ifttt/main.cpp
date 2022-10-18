@@ -1,4 +1,4 @@
-#include "SHT21.hpp"
+#include "RandomInt.hpp"
 #include <cstdlib> // for EXIT_SUCCESS and EXIT_FAILURE
 #include <httplib.h>
 #include <iostream>
@@ -11,10 +11,8 @@ int main()
 {
     try
     {
-        SHT21 sensor(g_i2cInstance);
-        auto temperature{sensor.readTemperature()};
-        std::cout << "Temperature: " << temperature << "°C\n";
-        if (temperature < 30.0)
+        int temperature{RandomInt{}.generate(15, 40)};
+        if (temperature < 30)
         {
             return EXIT_SUCCESS;
         }

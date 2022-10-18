@@ -1,6 +1,6 @@
 ## Description
 
-A tiny program that publishes a random temperature to the Adafruit MQTT broker.
+A tiny program that reads the room's temperature (or, in this case, generates a random one), and publishes it to the Adafruit MQTT broker.
 
 [Adafruit IO](https://io.adafruit.com) has been chosen because it's free (up to 30 messages per minute) and
 it provides easy to set up dashboards to visualize the data.  
@@ -30,6 +30,11 @@ sftp-bbb
 # run
 ADAFRUIT_KEY=yourKey ./mqtt
 ```
+
+## Interacting with the SHT21 Temperature Sensor + Circuit
+
+Instead of generating a random temperature each time the program is run, you could easily use the SHT21 sensor to measure the real one.  
+Check the [`i2c`](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/README.md) directory for details on setting it up.
 
 ## Dependencies
 

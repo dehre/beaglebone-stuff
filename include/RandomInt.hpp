@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <cassert>
 #include <random>
 
 class RandomInt
@@ -12,6 +12,7 @@ class RandomInt
 
     int generate(int minInclusive, int maxInclusive)
     {
+        assert(minInclusive < maxInclusive); /* better than the anonymous segfault */
         std::uniform_int_distribution<int> uni(minInclusive, maxInclusive);
         return uni(m_rng);
     }

@@ -69,6 +69,7 @@ add_executable(i2c i2c/main.cpp)
 ############################################################
 
 add_executable(ifttt ifttt/main.cpp)
+target_include_directories(ifttt PRIVATE ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(ifttt CONAN_PKG::cpp-httplib)
 
 ############################################################

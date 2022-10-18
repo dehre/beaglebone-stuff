@@ -5,7 +5,7 @@ such as interacting with Amazon Alexa, creating a Google Calendar event, or park
 
 ## Description - Details
 
-The `ifttt` program reads the room's temperature using the SHT21 sensor, and sends an http request to `maker.ifttt.com` if it's higher than 30°C.
+The `ifttt` program reads the room's temperature (or, in this case, generates a random one), and sends an http request to `maker.ifttt.com` if it's higher than 30°C.
 
 For simplicity, I set up my `ifttt.com` account so that it sends me an email when it receives a request labeled `high_temperature`.
 
@@ -48,6 +48,7 @@ Here's a nice online tool that helps with cron schedule expressions.
 
 ## Interacting with the SHT21 Temperature Sensor + Circuit
 
+Instead of generating a random temperature each time the program is run, you could easily use the SHT21 sensor to measure the real one.  
 Check the [`i2c`](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/README.md) directory for details on setting it up.
 
 ## Making HTTP Requests
