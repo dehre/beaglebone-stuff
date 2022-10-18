@@ -13,11 +13,11 @@ Client::Client(const char *serverURI, const char *clientId)
     };
 }
 
-void Client::connect()
+void Client::connect(const char *username, const char *password)
 {
     MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
-    conn_opts.keepAliveInterval = m_connectionKeepAliveInterval;
-    conn_opts.cleansession = m_connectionCleanSession;
+    conn_opts.username = username;
+    conn_opts.password = password;
     int rc{MQTTClient_connect(m_client, &conn_opts)};
     if (rc != MQTTCLIENT_SUCCESS)
     {

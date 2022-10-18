@@ -19,7 +19,7 @@ class Client
     Client(const char *serverURI, const char *clientId);
     Client(const MQTT::Client &) = delete;
     Client &operator=(const MQTT::Client &) = delete;
-    void connect();
+    void connect(const char *username = nullptr, const char *password = nullptr);
     void publishMessage(const char *topicName, const char *payload, unsigned long timeoutMs, bool retained = false);
     void disconnect();
     ~Client();
@@ -27,8 +27,6 @@ class Client
   private:
     MQTTClient m_client{};
     static constexpr int m_qos{1};
-    static constexpr int m_connectionKeepAliveInterval{20};
-    static constexpr bool m_connectionCleanSession{true};
-    static constexpr int m_disconnectTimeoutMs{10000};
+    static constexpr int m_disconnectTimeoutMs{5000};
 };
 }; // namespace MQTT
