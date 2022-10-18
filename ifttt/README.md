@@ -13,19 +13,10 @@ The `ifttt` program is automatically run by the linux cron daemon once per minut
 
 ## Build and Run
 
-Build:
+Refer to the top-level README for instructions on building.
 
-```sh
-mkdir build
-cd build
+The program expects the `IFTTT_KEY` environment variable to be set before running:
 
-conan install ..
-
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build
-cmake --build .
-```
-
-Run:
 ```sh
 # sftp the executable into the BBB
 sftp-bbb

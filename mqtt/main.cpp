@@ -1,4 +1,6 @@
 #include "MQTT.hpp"
+#include "RandomInt.hpp"
+#include <cstdio>
 #include <iostream>
 
 #define ADAFRUIT_MQTT_BROKER
@@ -17,6 +19,8 @@ const char *g_payload{"Hello world"};
 const char *g_adafruitUsername{nullptr};
 #endif
 
+const int g_publishMessageTimeoutMs{1000};
+
 int main()
 {
     const char *adafruitKey{nullptr};
@@ -31,10 +35,13 @@ int main()
 
     try
     {
+        int temperature{RandomInt{}.generate(15, 40)};
+        char temperatureStr[3]; /* 2 chars + null character */
+        snprintf(temperatureStr, 3, "%d", temperature);
 
         MQTT::Client client(g_address, g_clientId);
         client.connect(g_adafruitUsername, adafruitKey);
-        client.publishMessage(g_topic, g_payload, 1000);
+        client.publishMessage(g_topic, temperatureStr, g_publishMessageTimeoutMs);
         client.disconnect();
     }
     catch (const MQTT::Error &e)

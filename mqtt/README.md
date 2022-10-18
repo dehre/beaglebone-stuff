@@ -2,8 +2,8 @@
 
 A tiny program that publishes a random temperature to the Adafruit MQTT broker.
 
-[Adafruit IO](https://io.adafruit.com/) has been chosen because it's free (up to 30 messages per minute) and
-it provides nice dashboards to visualize the data.  
+[Adafruit IO](https://io.adafruit.com) has been chosen because it's free (up to 30 messages per minute) and
+it provides easy to set up dashboards to visualize the data.  
 Except for minor changes, the program should equally work with other MQTT brokers, such as [HiveMQ](https://www.hivemq.com) or [Cedalo](https://cedalo.com/mqtt-broker-pro-mosquitto).
 
 ## Set up Adafruit IO
@@ -18,17 +18,7 @@ Except for minor changes, the program should equally work with other MQTT broker
 
 ### Build and Run
 
-Build:
-
-```sh
-mkdir build
-cd build
-
-conan install .. --build=missing --profile=../profile_crossbuild
-
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build
-cmake --build .
-```
+Refer to the top-level README for instructions on building.
 
 The program expects the `ADAFRUIT_KEY` environment variable to be set before running:
 
@@ -38,9 +28,10 @@ sftp-bbb
 > put ./build/mqtt
 
 # run
-ADAFRUIT_KEY=myKey ./mqtt
+ADAFRUIT_KEY=yourKey ./mqtt
 ```
 
-### The nice dashboard
+## Dependencies
 
-TODO LORIS: screenshot
+This project relies on the [Eclipse Paho MQTT client library}(https://github.com/eclipse/paho.mqtt.c),  
+which is installed through Conan.
