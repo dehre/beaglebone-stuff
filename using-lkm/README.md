@@ -74,7 +74,3 @@ Output:
 ```
 
 Check this post for a more detailed description: https://forum.beagleboard.org/t/bbb-debian-10-3-sht21-sensor-not-detected-i2c/32946
-
-## Aside - The LKM implementation
-
-For reference, I copied the current LKM implementation into [`sht21.c`](https://github.com/dehre/beaglebone-stuff/blob/main/using-lkm/sht21.c).
