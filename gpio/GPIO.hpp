@@ -13,13 +13,13 @@ class GPIO
     void writeDirection(std::string_view dir);
 
   private:
-    static std::string strToUpper(std::string_view str);
-    static std::string buildPathFromTemplate(const std::string_view &templ, std::string_view str);
-    static std::string read(std::string_view path);
-    static void write(std::string_view path, std::string_view text);
+    static std::string buildPathFromTemplate(std::string_view templ, std::string_view str);
+    static std::string strToUpper(const std::string &str);
+    static std::string read(const std::string &path);
+    static void write(const std::string &path, std::string_view text);
 
-    std::string_view m_label{};
-    std::string_view m_gpioNumber{};
+    std::string m_label{};
+    std::string m_gpioNumber{};
     std::string m_pathToGpioValue{};
     std::string m_pathToGpioDirection{};
     std::string m_pathToPinMux{};

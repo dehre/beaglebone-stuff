@@ -9,7 +9,7 @@
  * PUBLIC
  */
 
-GPIO::GPIO(std::string_view label)
+GPIO::GPIO(std::string_view label) : m_label{label}
 {
     const auto found{PinMappings.find(label)};
     if (found == PinMappings.cend())
@@ -20,8 +20,6 @@ GPIO::GPIO(std::string_view label)
     {
         throw std::invalid_argument{"The pin provided cannot be used as GPIO"};
     }
-
-    m_label = label;
     m_gpioNumber = (*found).second.gpioNumber;
     m_pathToGpioValue = buildPathFromTemplate(GPIO::templatePathToGpioValue, m_gpioNumber);
     m_pathToGpioDirection = buildPathFromTemplate(GPIO::templatePathToGpioDirection, m_gpioNumber);
@@ -74,7 +72,15 @@ void GPIO::writeDirection(std::string_view dir)
  * PRIVATE
  */
 
-std::string GPIO::strToUpper(std::string_view str)
+std::string GPIO::buildPathFromTemplate(std::string_view templ, std::string_view str)
+{
+    std::string path{templ};
+    size_t startPos{path.find("{}")};
+    path.replace(startPos, 2, str);
+    return path;
+}
+
+std::string GPIO::strToUpper(const std::string &str)
 {
     std::string result{str};
     for (auto &c : result)
@@ -84,17 +90,9 @@ std::string GPIO::strToUpper(std::string_view str)
     return result;
 }
 
-std::string GPIO::buildPathFromTemplate(const std::string_view &templ, std::string_view str)
+std::string GPIO::read(const std::string &path)
 {
-    std::string path{templ};
-    size_t startPos{path.find("{}")};
-    path.replace(startPos, 2, str);
-    return path;
-}
-
-std::string GPIO::read(std::string_view path)
-{
-    std::ifstream iFile{path.data()};
+    std::ifstream iFile{path};
     if (iFile.fail())
     {
         std::ostringstream message{};
@@ -107,9 +105,9 @@ std::string GPIO::read(std::string_view path)
     return text;
 }
 
-void GPIO::write(std::string_view path, std::string_view text)
+void GPIO::write(const std::string &path, std::string_view text)
 {
-    std::ofstream oFile{path.data()};
+    std::ofstream oFile{path};
     if (oFile.fail())
     {
         std::ostringstream message{};

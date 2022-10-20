@@ -61,5 +61,3 @@ Here are the projects, in the order they've been developed:
 ## TODOs, eventually
 
 * create a .env file, instead of picking env variables from the cli; static lib to parse .env files
-
-* check if you have any weird use of <string_view> in the codebase (maybe a const char* would have fitted better)
