@@ -62,6 +62,4 @@ Here are the projects, in the order they've been developed:
 
 * create a .env file, instead of picking env variables from the cli; static lib to parse .env files
 
-* add specialized error class for i2c, so that it becomes easier to debug
-
 * check if you have any weird use of <string_view> in the codebase (maybe a const char* would have fitted better)

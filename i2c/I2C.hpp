@@ -18,12 +18,12 @@ class I2C
         m_pathToDev.replace(m_pathToDev.find("{}"), 2, std::to_string(instance));
         if ((m_fd = open(m_pathToDev.data(), O_RDWR)) < 0)
         {
-            throw std::invalid_argument("Invalid i2c instance provided");
+            throw std::invalid_argument("Failed to create i2c instance: invalid device provided");
         };
 
         if (ioctl(m_fd, I2C_SLAVE, m_slaveAddress) < 0)
         {
-            throw std::invalid_argument("Invalid slave address provided");
+            throw std::invalid_argument("Failed to create i2c instance: invalid slave address provided");
         }
     }
 
@@ -36,8 +36,7 @@ class I2C
     {
         if (::write(m_fd, buffer.data(), buffer.size()) != 1)
         {
-            std::string errmsg{};
-            errmsg.append("Failed to write: ").append(std::strerror(errno));
+            std::string errmsg{"Failed to write to " + m_pathToDev + ": " + std::strerror(errno)};
             throw std::runtime_error(errmsg);
         }
     }
@@ -47,8 +46,7 @@ class I2C
         std::array<uint8_t, size> buffer{};
         if (::read(m_fd, buffer.data(), buffer.size()) != buffer.size())
         {
-            std::string errmsg{};
-            errmsg.append("Failed to read: ").append(std::strerror(errno));
+            std::string errmsg{"Failed to read from " + m_pathToDev + ": " + std::strerror(errno)};
             throw std::runtime_error(errmsg);
         }
         return buffer;
