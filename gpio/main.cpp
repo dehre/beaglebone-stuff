@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string_view>
 
-static void printUsage();
+static void print_usage();
 
 int main(int argc, const char *argv[])
 {
@@ -23,19 +23,19 @@ int main(int argc, const char *argv[])
 
         if (command == "read" && target == "value")
         {
-            pin.readValue();
+            pin.read_value();
         }
         else if (command == "read" && target == "direction")
         {
-            pin.readDirection();
+            pin.read_direction();
         }
         else if (command == "write" && target == "value")
         {
-            pin.writeValue(input);
+            pin.write_value(input);
         }
         else if (command == "write" && target == "direction")
         {
-            pin.writeDirection(input);
+            pin.write_direction(input);
         }
         else
         {
@@ -45,7 +45,7 @@ int main(int argc, const char *argv[])
     catch (const std::exception &e)
     {
         std::cerr << "Error: " << e.what() << "\n\n";
-        printUsage();
+        print_usage();
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -56,7 +56,7 @@ int main(int argc, const char *argv[])
  * ./gpio p8_16 read value
  * ./gpio p8_16 write direction in+
  */
-static void printUsage()
+static void print_usage()
 {
     std::cerr << "Usage: ./gpio <pin> <command> <target> [input]\n";
     std::cerr << "    <pin>: pin formatted as \"p8_16\"\n";

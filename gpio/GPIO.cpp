@@ -1,5 +1,5 @@
 #include "GPIO.hpp"
-#include "PinMappings.hpp"
+#include "pin_mappings.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -11,56 +11,56 @@
 
 GPIO::GPIO(std::string_view label) : m_label{label}
 {
-    const auto found{PinMappings.find(label)};
-    if (found == PinMappings.cend())
+    const auto found{pin_mappings.find(label)};
+    if (found == pin_mappings.cend())
     {
         throw std::invalid_argument{"Invalid label provided"};
     }
-    if (!(*found).second.isGPIO)
+    if (!(*found).second.is_gpio)
     {
         throw std::invalid_argument{"The pin provided cannot be used as GPIO"};
     }
-    m_gpioNumber = (*found).second.gpioNumber;
-    m_pathToGpioValue = buildPathFromTemplate(GPIO::templatePathToGpioValue, m_gpioNumber);
-    m_pathToGpioDirection = buildPathFromTemplate(GPIO::templatePathToGpioDirection, m_gpioNumber);
-    m_pathToPinMux = buildPathFromTemplate(GPIO::templatePathToPinMux, strToUpper(m_label));
+    m_gpio_number = (*found).second.gpio_number;
+    m_path_to_gpio_value = build_path_from_template(GPIO::template_path_to_gpio_value, m_gpio_number);
+    m_path_to_gpio_direction = build_path_from_template(GPIO::template_path_to_gpio_direction, m_gpio_number);
+    m_path_to_pin_mux = build_path_from_template(GPIO::template_path_to_pin_mux, str_to_upper(m_label));
 }
 
-void GPIO::readValue()
+void GPIO::read_value()
 {
-    std::cout << "Pin " << m_label << " value: " << read(m_pathToGpioValue) << '\n';
+    std::cout << "Pin " << m_label << " value: " << read(m_path_to_gpio_value) << '\n';
 }
 
-void GPIO::writeValue(std::string_view val)
+void GPIO::write_value(std::string_view val)
 {
     if (val != "0" && val != "1")
     {
         throw std::invalid_argument{"Invalid <input> for \"value\""};
     }
-    write(m_pathToGpioValue, val);
+    write(m_path_to_gpio_value, val);
 }
 
-void GPIO::readDirection()
+void GPIO::read_direction()
 {
-    std::cout << "Pin " << m_label << " direction: " << read(m_pathToGpioDirection) << '\n';
+    std::cout << "Pin " << m_label << " direction: " << read(m_path_to_gpio_direction) << '\n';
 }
 
-void GPIO::writeDirection(std::string_view dir)
+void GPIO::write_direction(std::string_view dir)
 {
     if (dir == "default")
     {
-        write(m_pathToPinMux, "default");
-        write(m_pathToGpioDirection, "in");
+        write(m_path_to_pin_mux, "default");
+        write(m_path_to_gpio_direction, "in");
     }
     else if (dir == "in" || dir == "out")
     {
-        write(m_pathToPinMux, "default");
-        write(m_pathToGpioDirection, dir);
+        write(m_path_to_pin_mux, "default");
+        write(m_path_to_gpio_direction, dir);
     }
     else if (dir == "in+" || dir == "in-")
     {
-        dir == "in+" ? write(m_pathToPinMux, "gpio_pu") : write(m_pathToPinMux, "gpio_pd");
-        write(m_pathToGpioDirection, "in");
+        dir == "in+" ? write(m_path_to_pin_mux, "gpio_pu") : write(m_path_to_pin_mux, "gpio_pd");
+        write(m_path_to_gpio_direction, "in");
     }
     else
     {
@@ -72,15 +72,15 @@ void GPIO::writeDirection(std::string_view dir)
  * PRIVATE
  */
 
-std::string GPIO::buildPathFromTemplate(std::string_view templ, std::string_view str)
+std::string GPIO::build_path_from_template(std::string_view templ, std::string_view str)
 {
     std::string path{templ};
-    size_t startPos{path.find("{}")};
-    path.replace(startPos, 2, str);
+    size_t start_pos{path.find("{}")};
+    path.replace(start_pos, 2, str);
     return path;
 }
 
-std::string GPIO::strToUpper(const std::string &str)
+std::string GPIO::str_to_upper(const std::string &str)
 {
     std::string result{str};
     for (auto &c : result)
@@ -92,28 +92,28 @@ std::string GPIO::strToUpper(const std::string &str)
 
 std::string GPIO::read(const std::string &path)
 {
-    std::ifstream iFile{path};
-    if (iFile.fail())
+    std::ifstream i_file{path};
+    if (i_file.fail())
     {
-        std::ostringstream message{};
-        message << "Could not open file for reading: " << path;
-        throw std::ios::failure{message.str()};
+        std::ostringstream err{};
+        err << "Could not open file for reading: " << path;
+        throw std::ios::failure{err.str()};
     }
 
     std::string text{};
-    std::getline(iFile, text);
+    std::getline(i_file, text);
     return text;
 }
 
 void GPIO::write(const std::string &path, std::string_view text)
 {
-    std::ofstream oFile{path};
-    if (oFile.fail())
+    std::ofstream o_file{path};
+    if (o_file.fail())
     {
-        std::ostringstream message{};
-        message << "Could not open file for writing: " << path;
-        throw std::ios::failure{message.str()};
+        std::ostringstream err{};
+        err << "Could not open file for writing: " << path;
+        throw std::ios::failure{err.str()};
     }
-    oFile << text;
+    o_file << text;
     std::cout << "Written \"" << text << "\" to \"" << path << "\"\n";
 }
