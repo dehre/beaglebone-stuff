@@ -6,8 +6,6 @@
 #include <map>
 #include <string>
 
-// TODO LORIS: ignore lines starting with #
-
 namespace dotenv
 {
 using map_t = std::map<const std::string, const std::string>;
@@ -36,6 +34,10 @@ map_t parse()
 
 static void parseline(const std::string &line, map_t &envs)
 {
+    if (line.empty() || line.front() == '#')
+    {
+        return;
+    }
     auto found_idx{line.find('=')};
     if (found_idx == std::string::npos)
     {
