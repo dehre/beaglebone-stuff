@@ -1,6 +1,6 @@
 #include "MQTT.hpp"
-#include "RandomInt.hpp"
 #include "dotenv.hpp"
+#include "randint.hpp"
 #include <cstdio>
 #include <iostream>
 #include <stdexcept>
@@ -31,7 +31,7 @@ int main()
         std::string topic{g_template_topic};
         topic.replace(topic.find("{}"), 2, adafruit_username.empty() ? "user" : adafruit_username);
 
-        int temperature_int{RandomInt{}.generate(15, 40)};
+        int temperature_int{randint(15, 40)};
         char temperature[3];                             /* 2 chars + null character */
         snprintf(temperature, 3, "%d", temperature_int); // TODO LORIS: get rid of temperature_int
 

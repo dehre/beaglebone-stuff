@@ -1,5 +1,5 @@
-#include "RandomInt.hpp"
 #include "dotenv.hpp"
+#include "randint.hpp"
 #include <cstdlib> // for EXIT_SUCCESS and EXIT_FAILURE
 #include <httplib.h>
 #include <iostream>
@@ -10,7 +10,7 @@ int main()
 {
     try
     {
-        int temperature{RandomInt{}.generate(15, 40)};
+        int temperature{randint(15, 40)};
         if (temperature < 30)
         {
             std::cout << "Registered temperature: " << temperature << "°C (high_temperature event not triggered)\n";
