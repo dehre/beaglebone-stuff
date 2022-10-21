@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 
+// TODO LORIS: ignore lines starting with #
+
 namespace dotenv
 {
 using map_t = std::map<const std::string, const std::string>;
