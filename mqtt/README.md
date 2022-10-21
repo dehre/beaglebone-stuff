@@ -10,17 +10,17 @@ Except for minor changes, the program should equally work with other MQTT broker
 
 1. Create a new account at `io.adafruit.com`
 
-2. Create a new Feed named `temperature` (or whatever)
+2. Create a new Feed named `temperature`
 
-3. Open `main.cpp` and adjust the variables `g_adafruitUsername` and `g_topic`
+3. Get your AIO key (you'll need it to run the program)
 
-4. Get your AIO key (you'll need it to run the program)
+4. Open the `.env` file and adjust the variables `ADAFRUIT_USERNAME` and `ADAFRUIT_KEY`
 
 ### Build and Run
 
 Refer to the top-level README for instructions on building.
 
-The program expects the `ADAFRUIT_KEY` environment variable to be set before running:
+Run:
 
 ```sh
 # sftp the executable into the BBB
@@ -28,7 +28,36 @@ sftp-bbb
 > put ./build/mqtt
 
 # run
-ADAFRUIT_KEY=yourKey ./mqtt
+./mqtt
+```
+
+## Using a local Mosquitto broker
+
+Before trying to publish data to `adafruit.io`, it might be useful to try the program locally.  
+In that case, simply adjust the `.env` file to look like:
+
+```
+ADAFRUIT_ADDRESS=tcp://localhost:1883
+ADAFRUIT_USERNAME=
+ADAFRUIT_KEY=
+```
+
+Then install a local Mosquitto server and the Mosquitto client applications:
+
+```sh
+sudo apt update
+sudo apt install mosquitto
+sudo apt install mosquitto-clients
+```
+
+Finally, start the subscriber client on a terminal, and run the program on a different one:
+
+```sh
+# on terminal A
+mosquitto_sub -v -t "user/feeds/temperature"
+
+# on terminal B
+./mqtt
 ```
 
 ## Interacting with the SHT21 Temperature Sensor + Circuit

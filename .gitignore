@@ -1,5 +1,2 @@
 .vscode/settings.json
 build/
-
-# TODO LORIS: delete this line
-.env
