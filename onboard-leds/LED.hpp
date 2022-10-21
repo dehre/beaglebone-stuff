@@ -1,53 +1,30 @@
 #pragma once
 
+#include <cerrno>  // for errno
+#include <cstring> // for strerror
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 class LED
 {
-  private:
-    int m_id;
-    std::string m_path;
-
-    void m_write(const std::string &fileName, const std::string &value)
-    {
-        std::string fullPath = m_path + fileName;
-        std::ofstream file(fullPath);
-        if (!file)
-        {
-            std::cerr << "Error: failed to open file: " << fullPath << '\n';
-            return;
-        }
-        file << value;
-    }
-
-    void m_removeTrigger()
-    {
-        m_write("trigger", "none");
-    }
-
   public:
-    LED(int led) : m_id{led}
+    LED(int led) : m_id{led}, m_path{"/sys/class/leds/beaglebone:green:usr" + std::to_string(led) + "/"}
     {
-        std::ostringstream path;
-        path << "/sys/class/leds/beaglebone:green:usr" << m_id << "/";
-        m_path = path.str();
     }
     ~LED(){};
 
-    void turnOn()
+    void turn_on()
     {
-        m_removeTrigger();
+        m_remove_trigger();
         m_write("brightness", "1");
     }
 
-    void turnOff()
+    void turn_off()
     {
-        m_removeTrigger();
+        m_remove_trigger();
         m_write("brightness", "0");
-    };
+    }
 
     void flash()
     {
@@ -55,4 +32,25 @@ class LED
         m_write("delay_on", "500");
         m_write("delay_off", "500");
     };
+
+  private:
+    int m_id;
+    std::string m_path;
+
+    void m_write(const std::string &file_name, const std::string &value)
+    {
+        std::string full_path = m_path + file_name;
+        std::ofstream file(full_path);
+        if (file.fail())
+        {
+            std::cerr << "Error: failed to open " << full_path << ": " << strerror(errno) << '\n';
+            return;
+        }
+        file << value;
+    }
+
+    void m_remove_trigger()
+    {
+        m_write("trigger", "none");
+    }
 };

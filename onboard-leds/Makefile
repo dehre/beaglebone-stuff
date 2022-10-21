@@ -2,8 +2,8 @@ CC = arm-linux-gnueabihf-g++
 CFLAGS = -g -Wall -Wextra -Werror -O0 -DDEBUG
 CFLAGS += -std=c++17
 
-OBJS = makeLEDs.o
-BIN = makeLEDs
+OBJS = make-leds.o
+BIN = make-leds
 
 all: $(BIN)
 

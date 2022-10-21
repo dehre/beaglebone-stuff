@@ -8,7 +8,7 @@ Build, run, and clean:
 make
 
 # <command> is one of "on", "off", or "flash"
-sudo ./makeLEDs <command>
+./make-leds <command>
 
 make clean
 ```
@@ -16,5 +16,5 @@ make clean
 Restore the default LEDs functionality:
 
 ```sh
-./restoreLEDs.sh
+./restore-leds.sh
 ```
