@@ -27,3 +27,7 @@ rm -rf build
 ## Circuit
 
 <img src="./circuit.svg" width=70% height=70%>
+
+## Official documentation
+
+https://www.kernel.org/doc/Documentation/i2c/dev-interface
