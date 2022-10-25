@@ -86,3 +86,9 @@ target_link_libraries(ifttt CONAN_PKG::cpp-httplib dotenv)
 add_executable(mqtt mqtt/main.cpp mqtt/MQTT.cpp)
 target_include_directories(mqtt PRIVATE ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(mqtt CONAN_PKG::paho-mqtt-c dotenv)
+
+############################################################
+## TARGET: WATCHDOG
+############################################################
+
+add_executable(watchdog watchdog/main.cpp)
