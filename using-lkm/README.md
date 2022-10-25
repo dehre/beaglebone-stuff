@@ -1,6 +1,6 @@
 ## Description
 
-Using a pre-build LKM (Linux Kernel Module) to read temperature and humidity from the SHT21 sensor (I2C).
+Using a pre-build LKM (Loadable Kernel Module) to read temperature and humidity from the SHT21 sensor (I2C).
 
 The same functionality could be achieved by programmatically accessing the i2c device (see [`i2c` directory](https://github.com/dehre/beaglebone-stuff/blob/main/i2c/I2C.hpp)).
 

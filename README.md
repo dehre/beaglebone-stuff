@@ -63,7 +63,7 @@ Here are the projects, in the order they've been developed:
 
 * `watchdog`: use the watchdog timer to reboot the board after 30 seconds of inactivity
 
-* `writing-lkm`: write a tiny linux kernel module
+* `writing-lkm`: write a tiny loadable kernel module
 
 Others:
 
