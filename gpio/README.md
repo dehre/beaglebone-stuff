@@ -2,17 +2,14 @@
 
 A tiny program to control the GPIO pins on the board.
 
-### Build and clean:
+### Build and sftp the executable into the board:
+
+Refer to the top-level README for instructions on building.
 
 ```sh
-# build
-mkdir -p build
-cd build
-cmake ..
-make
-
-# clean
-rm -rf build
+# (on the VM) sftp the executable into the BBB
+sftp-bbb
+> put build/bin/gpio
 ```
 
 ### Synopsis

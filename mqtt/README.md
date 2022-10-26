@@ -23,11 +23,12 @@ Refer to the top-level README for instructions on building.
 Run:
 
 ```sh
-# sftp the executable into the BBB
+# (on the VM) sftp the executable and the .env file into the BBB
 sftp-bbb
-> put ./build/mqtt
+> put build/bin/mqtt
+> put .env
 
-# run
+# (on the BBB) run
 ./mqtt
 ```
 

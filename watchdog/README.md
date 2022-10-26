@@ -13,7 +13,7 @@ Run:
 ```sh
 # (on the VM) sftp the executable into the BBB
 sftp-bbb
-> put ./build/bin/watchdog
+> put build/bin/watchdog
 
 # (on the BBB) run
 ./watchdog

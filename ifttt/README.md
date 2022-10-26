@@ -15,19 +15,19 @@ The `ifttt` program is automatically run by the linux cron daemon once per minut
 
 Refer to the top-level README for instructions on building.
 
-The program expects the `IFTTT_KEY` environment variable to be set before running:
+Before running, open the `.env` file and adjust the variable `IFTTT_KEY`.
 
 ```sh
-# sftp the executable into the BBB
+# (on the VM) sftp the executable and the .env file into the BBB
 sftp-bbb
-> put ./build/ifttt
+> put build/bin/ifttt
+> put .env
 
-# on the BBB, set the IFTTT_KEY env variable and run the program
-export IFTTT_KEY=theKeyYouReceivedWhenYouSetUpTheWebHook
+# (on the BBB) run
 ./ifttt
 ```
 
-The program will (of course) fail if you didn't set up a WebHook on IFTTT.com or didn't export the `IFTTT_KEY` env variable.
+The program will (of course) fail if you didn't set up a WebHook on IFTTT.com or didn't set the `IFTTT_KEY` env variable.
 
 ## Setting up the Linux Cron Daemon
 
