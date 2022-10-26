@@ -31,9 +31,8 @@ int main()
         std::string topic{g_template_topic};
         topic.replace(topic.find("{}"), 2, adafruit_username.empty() ? "user" : adafruit_username);
 
-        int temperature_int{randint(15, 40)};
-        char temperature[3];                             /* 2 chars + null character */
-        snprintf(temperature, 3, "%d", temperature_int); // TODO LORIS: get rid of temperature_int
+        char temperature[3]; /* 2 chars + null character */
+        snprintf(temperature, 3, "%d", randint(15, 40));
 
         MQTT::Client client(adafruit_address.c_str(), g_clientId);
         client.connect(adafruit_username.empty() ? nullptr : adafruit_username.c_str(),
