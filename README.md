@@ -33,7 +33,7 @@ cmake --build .
 
 The executables will be placed in `build/bin`.
 
-If, for debugging purposes, you want to build the project for the local VM:
+If, for debugging purposes, you want to build the projects for the local VM:
 
 ```sh
 mkdir build
@@ -44,6 +44,10 @@ conan install .. --build=missing
 cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Build -DBUILD_LOCAL=1
 cmake --build .
 ```
+
+Exception: the project `onboard-leds` is built using a regular `Makefile`, so `cd` into the directory and simply call `make`.
+
+Exception: the project `writing-lkm` uses `Kbuild`; check its readme for details.
 
 ## The projects
 

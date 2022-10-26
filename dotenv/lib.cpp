@@ -11,8 +11,6 @@ namespace dotenv
 using map_t = std::map<const std::string, const std::string>;
 static void parseline(const std::string &line, map_t &envs);
 
-/* It silently ignores all lines that not contain the '=' character */
-/* If variables are duplicate, only the first will be taken into consideration */
 map_t parse()
 {
     std::ifstream file(".env");
