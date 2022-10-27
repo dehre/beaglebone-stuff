@@ -1,5 +1,8 @@
 ## Description
 
+Writing a driver that toggles the LED when each time the button is pressed.  
+The driver is built as a kernel module (LKM), so that it can be dynamically loaded and unloaded.
+
 ## Circuit
 
 <img src="./circuit.svg" width=70% height=70%>
@@ -8,7 +11,8 @@
 
 Although cross-compiling a LKM is possible, I preferred compiling it directly from the BBB for simplicity.
 
-Assuming the basic tools are already installed there (`sudo apt install build-essential`), it should be quite straightforward to [set up vscode remove development](https://code.visualstudio.com/docs/remote/ssh).
+Assuming the basic tools are already installed there (`sudo apt install build-essential`),
+it should be quite straightforward to [set up vscode for remote development](https://code.visualstudio.com/docs/remote/ssh).
 
 ## Build the LKM
 
@@ -17,7 +21,6 @@ Assuming the basic tools are already installed there (`sudo apt install build-es
 First, install the Linux kernel headers:
 
 ```sh
-# on the BBB
 sudo apt update
 sudo apt install linux-headers-$(uname -r)
 ```
