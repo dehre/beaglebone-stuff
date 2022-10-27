@@ -1,23 +1,14 @@
 ## Description
 
+## Circuit
+
+<img src="./circuit.svg" width=70% height=70%>
+
 ## Build the LKM - Foreword
 
 Although cross-compiling a LKM is possible, I preferred compiling it directly from the BBB for simplicity.
 
-That means:
-
-1. write code on the VM (or local machine)
-
-2. sftp the files into the BBB
-
-3. call `make` and check for compiler errors
-
-So, before proceeding into the next section, copy the entire `writing-lkm` directory into the BBB:
-
-```sh
-sftp-bbb
-> put -r writing-lkm/
-```
+Assuming the basic tools are already installed there (`sudo apt install build-essential`), it should be quite straightforward to [set up vscode remove development](https://code.visualstudio.com/docs/remote/ssh).
 
 ## Build the LKM
 
@@ -61,19 +52,31 @@ Finally you can play around with the module:
 # insert the module
 sudo insmod hello.ko
 
+# remove the module
+sudo rmmod hello.ko
+
 # get info about the module
 modinfo hello.ko
 
-# remove the module
-sudo rmmod hello.ko
+# get other info about the module
+ls /sys/module/hello
+
+# get other info about the module
+cat /proc/modules | grep hello
 ```
 
 The `printk` outputs can be viewed in the kernel ring buffer or in the kernel log:
 
 ```sh
-# option a
+# kernel ring buffer
 dmesg | tail -n 5
 
-# option b (the `+G` flag jumps to the end)
+# kernel log (the `+G` flag jumps to the end)
 less +G /var/log/kern.log
 ```
+
+## The `hello` LKM
+
+TODO LORIS
+
+`hello.c` is the tiniest LKM
