@@ -1,5 +1,7 @@
 #include "GPIO.hpp"
 #include "pin_mappings.hpp"
+#include <cerrno>  // for errno
+#include <cstring> // for strerror
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -28,7 +30,8 @@ GPIO::GPIO(std::string_view label) : m_label{label}
 
 void GPIO::read_value()
 {
-    std::cout << "Pin " << m_label << " value: " << read(m_path_to_gpio_value) << '\n';
+    const std::string value{read(m_path_to_gpio_value)};
+    std::cout << "Pin " << m_label << " value: " << value << '\n';
 }
 
 void GPIO::write_value(std::string_view val)
@@ -42,7 +45,8 @@ void GPIO::write_value(std::string_view val)
 
 void GPIO::read_direction()
 {
-    std::cout << "Pin " << m_label << " direction: " << read(m_path_to_gpio_direction) << '\n';
+    const std::string direction{read(m_path_to_gpio_direction)};
+    std::cout << "Pin " << m_label << " direction: " << direction << '\n';
 }
 
 void GPIO::write_direction(std::string_view dir)
@@ -96,7 +100,7 @@ std::string GPIO::read(const std::string &path)
     if (i_file.fail())
     {
         std::ostringstream err{};
-        err << "Could not open file for reading: " << path;
+        err << "Could not open file \"" << path << "\" for reading: " << std::strerror(errno);
         throw std::ios::failure{err.str()};
     }
 
@@ -111,7 +115,7 @@ void GPIO::write(const std::string &path, std::string_view text)
     if (o_file.fail())
     {
         std::ostringstream err{};
-        err << "Could not open file for writing: " << path;
+        err << "Could not open file \"" << path << "\" for writing: " << std::strerror(errno);
         throw std::ios::failure{err.str()};
     }
     o_file << text;
