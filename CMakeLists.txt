@@ -29,16 +29,16 @@ add_compile_options(
     -Wunused                  # warn on anything being unused
     -Woverloaded-virtual      # warn if you overload (not override) a virtual function
     -Wconversion              # warn on type conversions that may lose data
-    -Wsign-conversion         # (Clang all versions, GCC >= 4.3) warn on sign conversions
-    -Wmisleading-indentation  # (only in GCC >= 6.0) warn if indentation implies blocks where blocks do not exist
-    -Wnull-dereference        # (only in GCC >= 6.0) warn if a null dereference is detected
-    -Wdouble-promotion        # (GCC >= 4.6, Clang >= 3.8) warn if float is implicit promoted to double
+    -Wsign-conversion         # warn on sign conversions
+    -Wmisleading-indentation  # warn if indentation implies blocks where blocks do not exist
+    -Wnull-dereference        # warn if a null dereference is detected
+    -Wdouble-promotion        # warn if float is implicit promoted to double
     -Wformat=2                # warn on security issues around functions that format output (ie printf)
     -Weffc++                  # warning mode can be too noisy, but if it works for your project, use it also
-    -Wduplicated-cond         # (only in GCC >= 6.0) warn if if / else chain has duplicated conditions
-    -Wduplicated-branches     # (only in GCC >= 7.0) warn if if / else branches have duplicated code
-    -Wlogical-op              # (only in GCC) warn about logical operations being used where bitwise were probably wanted
-    -Wuseless-cast            # (only in GCC >= 4.8) warn if you perform a cast to the same type
+    -Wduplicated-cond         # warn if if / else chain has duplicated conditions
+    -Wduplicated-branches     # warn if if / else branches have duplicated code
+    -Wlogical-op              # warn about logical operations being used where bitwise were probably wanted
+    -Wuseless-cast            # warn if you perform a cast to the same type
 #   -pedantic                 # warn on language extensions
 #   -Werror                   # treat warnings as errors
   )
