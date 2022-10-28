@@ -1,6 +1,31 @@
 {
     "version": "2.0.0",
     "tasks": [
+        /* Rebuild project for the beaglebone */
+        {
+            "label": "cmake rebuild bbb",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "cmake clean",
+                "_mkdir_build_",
+                "_conan_install_bbb_",
+                "_cmake_setup_bbb_",
+                "_cmake_build_"
+            ]
+        },
+        /* Rebuild project for the local machine */
+        {
+            "label": "cmake rebuild local",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "cmake clean",
+                "_mkdir_build_",
+                "_conan_install_local_",
+                "_cmake_setup_local_",
+                "_cmake_build_"
+            ]
+        },
+        /* Clean the build directory */
         {
             "type": "shell",
             "label": "cmake clean",
@@ -9,29 +34,6 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": []
-        },
-        /* Build project for the beaglebone */
-        {
-            "type": "shell",
-            "label": "cmake rebuild bbb",
-            "command": "cmake --build .",
-            "options": {
-                "cwd": "${workspaceFolder}/build"
-            },
-            "dependsOrder": "sequence",
-            "dependsOn": ["cmake clean", "_mkdir_build_","_conan_install_bbb_", "_cmake_setup_bbb_"],
-        },
-        /* Build project for the local machine */
-        {
-            "type": "shell",
-            "label": "cmake rebuild local",
-            "command": "cmake --build .",
-            "options": {
-                "cwd": "${workspaceFolder}/build"
-            },
-            "dependsOrder": "sequence",
-            "dependsOn": ["cmake clean", "_mkdir_build_","_conan_install_local_", "_cmake_setup_local_"],
         },
 
         /*
@@ -39,11 +41,19 @@
          */
         {
             "type": "shell",
+            "label": "_cmake_build_",
+            "command": "cmake --build .",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            }
+        },
+        {
+            "type": "shell",
             "label": "_cmake_setup_bbb_",
             "command": "cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Build",
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            },
+            }
         },
         {
             "type": "shell",
@@ -51,7 +61,7 @@
             "command": "cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Build -DBUILD_LOCAL=1",
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            },
+            }
         },
         {
             "type": "shell",
@@ -59,7 +69,7 @@
             "command": "conan install .. --build=missing --profile=../profile_crossbuild",
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            },
+            }
         },
         {
             "type": "shell",
@@ -67,7 +77,7 @@
             "command": "conan install .. --build=missing",
             "options": {
                 "cwd": "${workspaceFolder}/build"
-            },
+            }
         },
         {
             "type": "shell",
@@ -75,7 +85,7 @@
             "command": "mkdir -p build",
             "options": {
                 "cwd": "${workspaceFolder}"
-            },
+            }
         }
     ]
 }
