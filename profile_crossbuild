@@ -1,4 +1,5 @@
 # Official conan docs for cross building: https://docs.conan.io/en/latest/systems_cross_building/cross_building.html
+# How to manage the GCC>=5 ABI: https://docs.conan.io/en/latest/howtos/manage_gcc_abi.html#manage-gcc-abi
 
 target_host=arm-linux-gnueabihf
 standalone_toolchain=/usr/bin/
@@ -10,7 +11,7 @@ os=Linux
 arch=armv7hf
 compiler=gcc
 compiler.version=8.3
-compiler.libcxx=libstdc++
+compiler.libcxx=libstdc++11
 build_type=Debug
 
 [env]

@@ -41,7 +41,9 @@ cmake --build .
 
 The executables will be placed in `build/bin`.
 
-If, for debugging purposes, you want to build the projects for the local VM:
+For debugging purposes, you may want to build the projects for the local VM too.  
+To avoid future headaches, adjust your Conan profile to [use the CXX11 ABI by default](https://docs.conan.io/en/latest/howtos/manage_gcc_abi.html#manage-gcc-abi) before proceeding.  
+Then, to build:
 
 ```sh
 mkdir build
