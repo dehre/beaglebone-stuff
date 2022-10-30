@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.21)
 project(beaglebone-stuff VERSION 1.0)
 
 if(NOT DEFINED BUILD_LOCAL)
-    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the BBB)
+    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the BBB) # print message when running `cmake --build .`
     set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
     set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 else()
-    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the VM)
+    add_custom_target(print-target ALL COMMAND ${CMAKE_COMMAND} -E echo Building for the VM) # print message when running `cmake --build .`
     set(ignoreme "${BUILD_LOCAL}") # remove warning "unused variable"
 endif()
 
