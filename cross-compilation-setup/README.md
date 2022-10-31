@@ -248,3 +248,34 @@ set remote exec-file testcross
 ## GDB - Debugging Session with VSCode
 
 I didn't manage to properly set it up yet :(
+
+## VM running out of space
+
+If you run out of space in the VM, you can resize the image, create a new partition, and mount it somewhere in your fs:
+
+```sh
+# from your Mac, with the VM shut down
+qemu-img resize /path/to/your/something.qcow2 +5G
+
+# from the VM
+sudo gparted
+
+# in gparted: create a new ext4 partition and apply the changes
+doItInTheGUIApp
+
+# mount the drive
+sudo mount /dev/vda4 /media/newhd
+```
+
+Then you can, for example, [store your Conan packages](https://docs.conan.io/en/latest/reference/config_files/conan.conf.html#storage) in the new partition.
+
+To automatically mount the drive at boot time:
+
+```sh
+sudo vi /etc/fstab
+
+# add this line
+/dev/vda4    /media/newhd    ext4    defaults    0    2
+```
+
+More info at [this](https://github.com/utmapp/UTM/issues/2636#issuecomment-922340239) and [this](https://www.cyberciti.biz/faq/mount-drive-from-command-line-ubuntu-linux/) links.  
